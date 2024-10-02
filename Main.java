@@ -1,8 +1,9 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 public class Main 
 {
-    public static void main(String[] args) 
+    public static void main(String[] args) throws FileNotFoundException, IOException 
     {
         Game game = new Game();
         fileIO file = new fileIO();
@@ -16,7 +17,7 @@ public class Main
 
             while(flag)
             {
-                System.out.print("Welcome please choose a game:\n1: Dice\n2: 3 Dice\n3: 1 D20\n4: Coin\n5: Exit\nPlease enter a number 1-5: ");
+                System.out.print("Welcome please choose a game:\n1: Dice\n2: 3 Dice\n3: 1 D20\n4: Coin\n5: Exit\n6: Retrieve user scores for a game\nPlease enter a number 1-6: ");
                 String input = in.nextLine();
                 if(input.length() > 1)
                 {
@@ -59,6 +60,21 @@ public class Main
                     {
                         flag = false;
                         break;
+                    }
+                    case(6):
+                    {
+                        /* asks user for name of game to get scores from, stores scores in scoresArray and prints to screen */
+                        fileIO userScores = new fileIO();
+                        System.out.println("please enter the name of a game (D6, 3D6, D20, coin):");
+                        String gameName = in.nextLine();
+                        String[] scoresArray = userScores.retrieveUserScores(username, gameName);
+                        for (String score : scoresArray) {
+                            if (score != null) {
+                                System.out.println(score);
+                            }
+                        }
+                        break;
+
                     }
                     default:
                     {
