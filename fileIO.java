@@ -84,6 +84,10 @@ public class fileIO
 
     public void recordHighScore(String user, int score, String file_name)
     {
+        if(user==NULL || score < 0 || file_name==NULL)
+        {
+            throw new NullPointerException();
+        }
         try (BufferedWriter writer = writeValidate(file_name)) 
         {
             writer.write(user+": "+ score);
