@@ -66,6 +66,9 @@ public class fileIO
 
     public BufferedWriter writeValidate(String file_name)
     {
+        if (file_name == null) {
+            throw new NullPointerException();
+        }
         try 
         {
             File file = new File(file_name);
