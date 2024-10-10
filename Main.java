@@ -12,8 +12,13 @@ public class Main
         String username ="";
         try (Scanner in = new Scanner(System.in)) 
         {
-            System.out.println("Please enter username");
-            username = file.validate_sanitize( in.nextLine());
+            while(username != "" || username.length() < 2)
+            {
+                System.out.format("%s is an invalid username try again\n"),username);
+                System.out.println("Please enter username");
+                username = file.validate_sanitize( in.nextLine());
+            }
+            
 
             while(flag)
             {
