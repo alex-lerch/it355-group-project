@@ -81,7 +81,7 @@ public class Main
                         break;
 
                     }
-                    case(7):
+                    case(9):
                     {
                         fileIO userScores = new fileIO();
                         System.out.println("please enter the name of a game (D6, 3D6, D20, coin):");
