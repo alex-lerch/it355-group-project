@@ -8,12 +8,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CoderResult;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class fileIO 
 {
+    private Locale locale;
+
     final public String validate_sanitize(String input)
     {
         final String str = Normalizer.normalize(input, Form.NFKC);
@@ -66,6 +74,9 @@ public class fileIO
 
     public BufferedWriter writeValidate(String file_name)
     {
+        if (file_name == null) {
+            throw new NullPointerException();
+        }
         try 
         {
             File file = new File(file_name);
@@ -81,6 +92,10 @@ public class fileIO
 
     public void recordHighScore(String user, int score, String file_name)
     {
+        if(user==null || score < 0 || file_name==null)
+        {
+            throw new NullPointerException();
+        }
         try (BufferedWriter writer = writeValidate(file_name)) 
         {
             writer.write(user+": "+ score);
@@ -91,6 +106,84 @@ public class fileIO
             System.out.println("Error, try again");
         }
         
+    }
+
+    public float safeIntToFloat(int value)
+    {
+        if (value >= 16777216)
+        {
+            System.out.println("Possible loss of precision when converting " + value + " to float.");
+        }
+        return (float) value;
+    }
+
+    public String safeByteArrayToString(byte[] byteArray)
+    {
+        Charset charset = StandardCharsets.UTF_8;
+        ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
+        CharBuffer charBuffer = CharBuffer.allocate(byteArray.length);
+
+        CoderResult result = charset.newDecoder().decode(byteBuffer, charBuffer, true);
+
+        if (result.isError())
+        {
+            System.out.println("Partial or invalid characters found in byte array.");
+            return null;
+        }
+
+        return new String(byteArray, charset);
+    }
+
+    public void processUnicodeString(String input)
+    {
+        System.out.println("Processing string as Unicode code points:");
+
+        input.codePoints().forEach(cp -> {
+            String character = new String(Character.toChars(cp));
+            System.out.println("Code point: " + cp + " (Character: " + character + ")");
+        });
+    }
+
+    public void setLocale()
+    {
+        this.locale = Locale.getDefault();
+        System.out.println("Locale has been set to: ");
+    }
+
+    public Locale getLocale()
+    {
+        return this.locale;
+    }
+
+    public String processNonCharacterData(byte[] byteArray)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (byte b : byteArray)
+        {
+            sb.append(String.format("%02X", b));
+        }
+
+        return sb.toString();
+    }
+
+    public byte[] encodeString(String input, Charset charset)
+    {
+        if (charset == null)
+        {
+            charset = StandardCharsets.UTF_8;
+        }
+        return input.getBytes(charset);
+    }
+
+    public String decodeString(byte[] byteArray, Charset charset)
+    {
+        if (charset == null)
+        {
+            charset = StandardCharsets.UTF_8;
+        }
+
+        return new String(byteArray, charset);
     }
 
     /* looks through file of specified game and returns an array with the user's scores in that game */
@@ -117,6 +210,11 @@ public class fileIO
             case("coin"):
             {
                 fileName = "coin.txt";
+                break;
+            }
+            case("compareFloats"):
+            {
+                fileName = "compareFloats.txt";
                 break;
             }
             default:
