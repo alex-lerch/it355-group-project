@@ -124,7 +124,7 @@ public class Main
                             }
                         }
                         if(totalGamesPlayed!=0){
-                            avgScore=(double)totalScore/(double)totalGamesPlayed;
+                            avgScore = divideDoubles((double)totalScore, (double)totalGamesPlayed);
                             if(Double.isInfinite(avgScore)){
                                 System.out.println("Invalid Average Score\tInfinite Score");
                             }
@@ -154,5 +154,20 @@ public class Main
             }
             in.close();
         }
+    } // end of main
+
+
+    /* helper functions */
+
+    /* provides division functionality while preventing division by zero. returns false if division by zero attempted */
+    public static double divideDoubles(double numerator, double denominator) {
+        if (denominator == 0) {
+            System.out.println("attempting to divide by zero: returning 0");
+            return 0;
+        }
+        else {
+            return numerator/denominator;
+        }
     }
+
 }
