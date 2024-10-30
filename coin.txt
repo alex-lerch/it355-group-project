@@ -18,3 +18,4 @@ alex: 1
 john: 0
 bill: 0
 bill: 0
+alex: 1

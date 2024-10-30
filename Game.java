@@ -37,7 +37,35 @@ public class Game
         return number.nextInt(2);
     }
 
+    public float compareTwoFloats()
+    {
+        SecureRandom random = new SecureRandom();
+        float num1 = random.nextFloat() * 100;
+        float num2 = random.nextFloat() * 100;
+        numGamesPlayed++;
+        return Math.max(num1, num2);
+    }
 
+    public void shiftOperators()
+    {
+        int value = 8;
+        int negValue = -8;
+        
+        System.out.println("Original value: " + value);
 
+        int leftShiftResult = value << 1;
+        System.out.println("After left shift (<< 1): " + leftShiftResult);
+
+        int rightShiftResult = value >> 1;
+        System.out.println("After right shift (>> 1): " + rightShiftResult);
+
+        int unsignedRightShiftResult = value >>> 1;
+        System.out.println("After unsigned right shift using " + value + " (>>> 1): " + unsignedRightShiftResult);
+
+        unsignedRightShiftResult = negValue >>> 1;
+        System.out.println("After unsigned right shift using " + negValue + " (>>> 1): " + unsignedRightShiftResult);
+
+        numGamesPlayed++;
+    }
 
 }
