@@ -8,11 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CoderResult;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.Locale;
@@ -22,12 +22,14 @@ public class fileIO
 {
     private Locale locale;
 
+    //Normalize a string input
     final public String validate_sanitize(String input)
     {
         final String str = Normalizer.normalize(input, Form.NFKC);
         return str;
     }
 
+    //Gets an input value from string user input
     public int game_choice(String input)
     {
     
@@ -36,6 +38,7 @@ public class fileIO
         return result;
     }
 
+    //Returns a BufferedReader
     public BufferedReader readValidate(String file_name)
     {
         if (file_name == null) {
@@ -64,6 +67,7 @@ public class fileIO
                     file_name = reader.nextLine();
                 }
                 else {
+                    reader.close();
                     System.exit(0);
                 }
             }
@@ -71,7 +75,7 @@ public class fileIO
         return null;
     }
 
-
+    //Returns a BufferedWriter
     public BufferedWriter writeValidate(String file_name)
     {
         if (file_name == null) {
@@ -90,6 +94,7 @@ public class fileIO
         }
     }
 
+    //Records a score
     public void recordHighScore(String user, int score, String file_name)
     {
         if(user==null || score < 0 || file_name==null)
@@ -108,6 +113,7 @@ public class fileIO
         
     }
 
+    //Converts in to float
     public float safeIntToFloat(int value)
     {
         if (value >= 16777216)
@@ -117,6 +123,7 @@ public class fileIO
         return (float) value;
     }
 
+    //Converts byte[] to string[]
     public String safeByteArrayToString(byte[] byteArray)
     {
         Charset charset = StandardCharsets.UTF_8;
@@ -134,6 +141,7 @@ public class fileIO
         return new String(byteArray, charset);
     }
 
+    //Processes a unicode string
     public void processUnicodeString(String input)
     {
         System.out.println("Processing string as Unicode code points:");
@@ -144,17 +152,20 @@ public class fileIO
         });
     }
 
+    //Sets locale
     public void setLocale()
     {
         this.locale = Locale.getDefault();
         System.out.println("Locale has been set to: ");
     }
 
+    //Gets locale
     public Locale getLocale()
     {
         return this.locale;
     }
 
+    //processes data
     public String processNonCharacterData(byte[] byteArray)
     {
         StringBuilder sb = new StringBuilder();
@@ -167,6 +178,7 @@ public class fileIO
         return sb.toString();
     }
 
+    //encodes string
     public byte[] encodeString(String input, Charset charset)
     {
         if (charset == null)
@@ -176,6 +188,7 @@ public class fileIO
         return input.getBytes(charset);
     }
 
+    //decodes string
     public String decodeString(byte[] byteArray, Charset charset)
     {
         if (charset == null)
@@ -192,51 +205,39 @@ public class fileIO
         String fileName = "";
         switch(game)
         {
-            case("D6"):
-            {
+            case("D6") ->             {
                 fileName = "D6.txt";
-                break;
             }
-            case("3D6"):
-            {
+            case("3D6") ->             {
                 fileName = "3D6.txt";
-                break;
             }
-            case("D20"):
-            {
+            case("D20") ->             {
                 fileName = "D20.txt";
-                break;
             }
-            case("coin"):
-            {
+            case("coin") ->             {
                 fileName = "coin.txt";
-                break;
             }
-            case("compareFloats"):
-            {
+            case("compareFloats") ->             {
                 fileName = "compareFloats.txt";
-                break;
             }
-            default:
-            {
+            default ->             {
                 System.out.println("invalid game file");
-                break;
             }
         }
-
         // read file and create array with scores
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        String line;
-        int lineNum = 1;
-        while((line = reader.readLine()) != null) {
-            if (line.contains(username))
-            if (addElement(scoresArray, lineNum - 1, line) == false) {
-                reader.close();
-                return scoresArray;
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) 
+        {
+            String line;
+            int lineNum = 1;
+            while((line = reader.readLine()) != null) {
+                if (line.contains(username))
+                    if (addElement(scoresArray, lineNum - 1, line) == false) {
+                        reader.close();
+                        return scoresArray;
+                    }
+                lineNum++;
             }
-            lineNum++;
         }
-        reader.close();
 
         return scoresArray;
     }
