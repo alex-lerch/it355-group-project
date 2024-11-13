@@ -126,11 +126,11 @@ public class fileIO
     //Converts byte[] to string[]
     public String safeByteArrayToString(byte[] byteArray)
     {
-        Charset charset = StandardCharsets.UTF_8;
+        Charset charSet = StandardCharsets.UTF_8;
         ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
         CharBuffer charBuffer = CharBuffer.allocate(byteArray.length);
 
-        CoderResult result = charset.newDecoder().decode(byteBuffer, charBuffer, true);
+        CoderResult result = charSet.newDecoder().decode(byteBuffer, charBuffer, true);
 
         if (result.isError())
         {
@@ -138,7 +138,7 @@ public class fileIO
             return null;
         }
 
-        return new String(byteArray, charset);
+        return new String(byteArray, charSet);
     }
 
     //Processes a unicode string
