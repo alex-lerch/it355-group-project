@@ -12,13 +12,19 @@ public class Main
     {
         try (Scanner in = new Scanner(System.in)) 
         {
+            //Create Game and fileIO objects to use in the program
             Game game = new Game();
             fileIO file = new fileIO();
-            boolean flag = true;
+
+            boolean flag = true;//Program ends when set to false
+
+            //variables used to by program to keep track of data
             int result;
             String username;
             int totalGamesPlayed;
             int totalScore=0;
+
+            //Gets username from user to for scorekeeping
             System.out.println("Please enter username");
             username = file.validate_sanitize( in.nextLine());
             while(username.equals("") || username.length() < 2) 
@@ -45,37 +51,45 @@ public class Main
                 //Switch case that controls the program
                 switch(choice)
                 {
+                    //Roll 1 Dice
                     case(1) ->                     {
                         result = game.rollD6();
                         System.out.println("Score: "+result);
                         file.recordHighScore(username, result, "D6.txt");
                     }
+                    //Roll 3 Dice
                     case(2) ->                     {
                         result = game.roll3D6();
                         System.out.println("Score: "+result);
                         file.recordHighScore(username, result, "3D6.txt");
                     }
+                    //Roll a 20 sided die
                     case(3) ->                     {
                         result = game.rollD20();
                         System.out.println("Score: "+result);
                         file.recordHighScore(username, result, "D20.txt");
                     }
+                    //Flips a coin
                     case(4) ->                     {
                         result = game.coinFlip();
                         System.out.println("Score: "+result);
                         file.recordHighScore(username, result, "coin.txt");
                     }
+                    //Compares two floating point numbers 
                     case(5) ->                     {
                         floatResult = game.compareTwoFloats();
                         System.out.println("The larger float is: " + floatResult);
                         file.recordHighScore(username, (int) floatResult, "compareFloats.txt");
                     }
+                    //Shift operators
                     case(6) ->                     {
                         game.shiftOperators();
                     }
+                    //Ends loop
                     case(9) ->                     {
                         flag = false;
                     }
+                    //Gets user scores
                     case(7) ->                     {
                         /* asks user for name of game to get scores from, stores scores in scoresArray and prints to screen */
                         fileIO userScores = new fileIO();
