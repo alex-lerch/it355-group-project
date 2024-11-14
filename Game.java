@@ -2,14 +2,12 @@ import java.security.SecureRandom;
 
 public class Game 
 {
-    //static variable to keep track of number of played games
-    private static int numGamesPlayed = 0;
 
     //Simulates rolling a dice
     public int rollD6()
     {
         SecureRandom number = new SecureRandom();
-        numGamesPlayed++;
+        number.setSeed(System.currentTimeMillis());
         return number.nextInt(7);
     }
 
@@ -21,7 +19,6 @@ public class Game
         {
             total = total + rollD6();
         }
-        numGamesPlayed++;
         return total;
     }
 
@@ -29,7 +26,7 @@ public class Game
     public int rollD20()
     {
         SecureRandom number = new SecureRandom();
-        numGamesPlayed++;
+        number.setSeed(System.currentTimeMillis());
         return number.nextInt(21);
     }
 
@@ -37,7 +34,7 @@ public class Game
     public int coinFlip()
     {
         SecureRandom number = new SecureRandom();
-        numGamesPlayed++;
+        number.setSeed(System.currentTimeMillis());
         return number.nextInt(2);
     }
 
@@ -45,9 +42,9 @@ public class Game
     public float compareTwoFloats()
     {
         SecureRandom random = new SecureRandom();
+        random.setSeed(System.currentTimeMillis());
         float num1 = random.nextFloat() * 100;
         float num2 = random.nextFloat() * 100;
-        numGamesPlayed++;
         return Math.max(num1, num2);
     }
 
@@ -71,7 +68,6 @@ public class Game
         unsignedRightShiftResult = negValue >>> 1;
         System.out.println("After unsigned right shift using " + negValue + " (>>> 1): " + unsignedRightShiftResult);
 
-        numGamesPlayed++;
     }
 
 }
