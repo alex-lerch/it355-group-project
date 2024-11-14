@@ -4,3 +4,5 @@ alex: 5
 john: 17
 bill: 20
 bill: 12
+alex: 0
+Drew: 15
