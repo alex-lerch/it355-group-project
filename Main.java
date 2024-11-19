@@ -15,7 +15,6 @@ public class Main
             //Create Game and fileIO objects to use in the program
             Game game = new Game();
             fileIO file = new fileIO();
-
             boolean flag = true;//Program ends when set to false
 
             //variables used to by program to keep track of data
@@ -23,17 +22,17 @@ public class Main
             String username;
             int totalGamesPlayed;
             int totalScore=0;
-
             //Gets username from user to for scorekeeping
             System.out.println("Please enter username");
             username = file.validate_sanitize( in.nextLine());
+
             while(username.equals("") || username.length() < 2) 
             {
                 System.out.format("%s is an invalid username try again\n",username);
                 System.out.println("Please enter username");
                 username = file.validate_sanitize( in.nextLine());
             }
-            
+
             //Main loop of the program 
             while(flag)
             {
@@ -120,7 +119,6 @@ public class Main
                             }
                             catch(NullPointerException | NumberFormatException e){
                                 //intScore=0;
-                                System.out.println("Invalid Score: "+score);
                             }
                         }
                         if(totalGamesPlayed!=0){
@@ -151,7 +149,6 @@ public class Main
             in.close();
         }
     } // end of main
-
 
     /* helper functions */
 
