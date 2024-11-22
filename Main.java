@@ -37,7 +37,7 @@ public class Main
             while(flag)
             {
                 //Gets menu option choice from the user 
-                System.out.print("Welcome please choose a game:\n1: Dice\n2: 3 Dice\n3: 1 D20\n4: Coin\n5: Compare Floats\n6: Shift Operators\n7: Retrieve user scores for a game\n8: Calculate Average\n9: Exit\nPlease enter a number 1-9: ");
+                System.out.print("Welcome please choose a game:\n1: Dice\n2: 3 Dice\n3: 1 D20\n4: Coin\n5: Compare Floats\n6: Shift Operators\n7: Retrieve user scores for a game\n8: Calculate Average\n9: Higher or Lower\n10: Exit\nPlease enter a number 1-10: ");
                 String input = in.nextLine();
                 if(input.length() > 1)
                 {
@@ -85,8 +85,25 @@ public class Main
                         game.shiftOperators();
                     }
                     //Ends loop
-                    case(9) ->                     {
+                    case(10) ->                     {
                         flag = false;
+                    }
+                    case(9) -> {
+                        int currentRoll = game.rollD100(); // Start with an initial roll
+                        System.out.println("Starting roll: " + currentRoll);
+                        System.out.println("Guess if the next roll will be Higher (H) or Lower (L): ");
+                        String guess = in.nextLine().toUpperCase();
+
+                        boolean guessHigher = guess.equals("H");
+                        boolean correct = game.higherOrLower(currentRoll, guessHigher);
+
+                        if (correct) {
+                            System.out.println("You guessed correctly!");
+                            file.recordHighOrLowerScore(username,"correct" , "higherOrLower.txt"); // Record win
+                        } else {
+                            System.out.println("Wrong guess. Better luck next time!");
+                            file.recordHighOrLowerScore(username, "Wrong", "higherOrLower.txt"); // Record loss
+                        }
                     }
                     //Gets user scores
                     case(7) ->                     {

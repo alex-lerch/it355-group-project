@@ -113,6 +113,24 @@ public class fileIO
         
     }
 
+    public void recordHighOrLowerScore(String user, String score, String file_name)
+    {
+        if(user==null || score == null || file_name==null)
+        {
+            throw new NullPointerException();
+        }
+        try (BufferedWriter writer = writeValidate(file_name))
+        {
+            writer.write(user+": "+ score);
+            writer.write('\n');
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error, try again");
+        }
+
+    }
+
     //Converts in to float
     public float safeIntToFloat(int value)
     {

@@ -30,6 +30,13 @@ public class Game
         return number.nextInt(21);
     }
 
+    public int rollD100()
+    {
+        SecureRandom number = new SecureRandom();
+        number.setSeed(System.currentTimeMillis());
+        return number.nextInt(101);
+    }
+
     //Simulates flipping a coin
     public int coinFlip()
     {
@@ -69,5 +76,21 @@ public class Game
         System.out.println("After unsigned right shift using " + negValue + " (>>> 1): " + unsignedRightShiftResult);
 
     }
+
+    public boolean higherOrLower(int currentRoll, boolean guessHigher) {
+        if (currentRoll < 1 || currentRoll > 100) {
+            throw new IllegalArgumentException("Current roll must be between 1 and 100.");
+        }
+
+        SecureRandom number = new SecureRandom();
+        number.setSeed(System.currentTimeMillis());
+        int nextRoll = number.nextInt(100) + 1;
+
+        System.out.println("Current Roll: " + currentRoll);
+        System.out.println("Next Roll: " + nextRoll);
+
+        return guessHigher ? nextRoll > currentRoll : nextRoll < currentRoll;
+    }
+
 
 }
